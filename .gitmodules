@@ -1,0 +1,9 @@
+[submodule "react-learning"]
+	path = react-learning
+	url = https://github.com/ranhoodlum/react-learning
+[submodule "exercises-from-odin/javascript-exercises"]
+	path = exercises-from-odin/javascript-exercises
+	url = git@github.com:ranhoodlum/javascript-exercises.git
+[submodule "exercises-from-odin/css-exercises"]
+	path = exercises-from-odin/css-exercises
+	url = git@github.com:ranhoodlum/css-exercises.git
