@@ -4,9 +4,9 @@ const authorRouter = Router();
 
 authorRouter.get("/", (req, res) => req.send("All authors"));
 
-authorRouter.get("/:bookId", (req, res) => {
+authorRouter.get("/:authorId", (req, res) => {
   const { authorId } = req.params;
-  req.send(`Author Id: ${authorId}`);
+  res.send(`Author Id: ${authorId}`);
 });
 
 // directly assign to module.exports for

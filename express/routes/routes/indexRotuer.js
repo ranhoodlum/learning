@@ -7,7 +7,7 @@ indexRouter.get("/", (req, res) => res.send("Homepage"));
 indexRouter.get("/about", (req, res) => {
   res.send("About page");
 });
-indexRouter.get("/:bookId/reserve", (req, res) => {
+indexRouter.get("/contact", (req, res) => {
   res.send("contacts page");
 });
 indexRouter.post("/contact", (req, res) => {
