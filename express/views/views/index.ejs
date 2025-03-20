@@ -1,0 +1,24 @@
+<html>
+<body>
+    <!-- the variables come from the 
+    res.locals (or app.locals) object in express that 
+    ejs stores as its own `locals` object 
+    so you can access it as locals.message or simply message, 
+    like the window object in the browser -->
+    <%= message %>
+    <!-- one quirk is that if variable's not defined in the locals 
+        object of res.render or res.render, 
+        if you reference locals.foo, it returns undefined 
+        but 
+        if you reference foo, it throws a ReferenceError
+
+        This is because the foo variables is undefined in the 
+        locals object of ejs, but directly foo doesn't work 
+        because we're trying to reference variable from the
+        locals object that expressjs exposes.
+
+        Try replacing locals.foo with foo
+    -->
+    <%= locals.foo %>
+</body>
+</html>
