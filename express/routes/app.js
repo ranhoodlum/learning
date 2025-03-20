@@ -31,6 +31,14 @@ app.use("/authors", authorRouter);
 app.use("/books", booksRouter);
 app.use("/", indexRouter);
 
+// Every thrown error in the application or the previous
+// middleware function calling `next` with an error as an
+// argument will eventually go to this middleware function
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.statusCode || 500).send("Internal Server Error");
+});
+
 const PORT = 3000;
 app.listen(3000, () => {
   console.log(`Listening on port ${PORT}`);
