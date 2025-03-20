@@ -17,9 +17,9 @@ async function getAuthorById(authorId) {
   return authors.find((author) => author.id === authorId);
 }
 
-async function getBookById(authorId) {
+async function getBookById(bookId) {
   // returns a promise (think of what a then() returns)
-  return authors.find((author) => author.id === authorId);
+  return books.find((book) => book.id === bookId);
 }
 
 module.exports = { getAuthorById, getBookById };

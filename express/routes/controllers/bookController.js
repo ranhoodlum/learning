@@ -2,21 +2,17 @@ const expressAsyncHandler = require("express-async-handler");
 const CustomNotFoundError = require("../errors/customNotFoundError");
 const db = require("../db");
 
-// controller that handles a specific action
-// retrieving author by their id from model
-// and creating a view and sending it according
-// to that data
-const getAuthorById = expressAsyncHandler(async function (req, res) {
-  const { authorId } = req.params;
+// book controller
+const getBookById = expressAsyncHandler(async function (req, res) {
+  const { bookId } = req.params;
 
-  const author = await db.getAuthorById(Number(authorId));
-  console.log(author);
+  const book = await db.getBookById(Number(bookId));
 
-  if (!author) {
-    throw new CustomNotFoundError("Author Not Found");
+  if (!book) {
+    throw new CustomNotFoundError("Book Not Found");
   }
 
-  res.send(`Author name: ${author.name}`);
+  res.send(`Book name: ${book.name}`);
 });
 
-module.exports = { getAuthorById };
+module.exports = { getBookById };
