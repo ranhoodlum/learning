@@ -6,9 +6,20 @@ const authors = [
   { id: 3, name: "Jason" },
 ];
 
+const books = [
+  { id: 1, name: "Harry Potter" },
+  { id: 2, name: "Muna Madan" },
+  { id: 3, name: "Dune" },
+];
+
 async function getAuthorById(authorId) {
   // returns a promise (think of what a then() returns)
   return authors.find((author) => author.id === authorId);
 }
 
-module.exports = { getAuthorById };
+async function getBookById(authorId) {
+  // returns a promise (think of what a then() returns)
+  return authors.find((author) => author.id === authorId);
+}
+
+module.exports = { getAuthorById, getBookById };

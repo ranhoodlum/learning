@@ -29,7 +29,18 @@ const indexRouter = require("./routes/indexRotuer");
 
 app.use("/authors", authorRouter);
 app.use("/books", booksRouter);
-app.use("/", indexRouter);
+app.use(
+  "/",
+  (req, res, next) => {
+    console.log("logged for the index");
+    // the next must be called to pass the
+    // control to the next middleware
+    // if not, how will this function know that
+    // where the next middleware exists
+    next();
+  },
+  indexRouter,
+);
 
 // Every thrown error in the application or the previous
 // middleware function calling `next` with an error as an
