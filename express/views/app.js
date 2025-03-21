@@ -14,19 +14,14 @@ const links = [
   { href: "about", text: "About" },
 ];
 
+const users = ["Rose", "Cake", "Biff"];
+
 app.get("/", (req, res) => {
-  // look for template called index in the the folder
-  // where the views is set (above)
+  // you must specify which *.ejs file to use
+  // in the first parameter
   //
-  // second param = local variables made available
-  // to that specific template, you can set the
-  // the locals with res.locals as well if you
-  // don't want to render the view until later
-  // but want to set the values along the way
-  // in preceeding middleware function
-  // res.locals.message = "EJS rocks!"
-  // res.render("index");
-  res.render("index", { links: links });
+  // In other words, which *view* to use.
+  res.render("index", { links: links, users: users });
 });
 
 app.listen(3000, () => {
