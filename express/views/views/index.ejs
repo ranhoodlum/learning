@@ -1,11 +1,12 @@
 <html>
-    <head>
-        <title>Homepage</title>
-    </head>
+    <%- include("./head.ejs", {title: "Home"}); %>
 <body>
     <%- include('navbar', { links: links }) %>
+
     <% for (let i = 0; i < users.length; i++) { %>
     <%- include('users/user', {user: users[i]}) %>
     <% } %>
+
+    <%- include("./footer.ejs"); %>
 </body>
 </html>

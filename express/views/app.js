@@ -9,6 +9,12 @@ app.set("views", path.join(__dirname, "views"));
 // which engine will be used for ejs
 app.set("view engine", "ejs");
 
+// set path for static assets
+const assetsPath = path.join(__dirname, "public");
+// for all the static file, look into this path for
+// the files
+app.use(express.static(assetsPath));
+
 const links = [
   { href: "/", text: "Home" },
   { href: "about", text: "About" },
@@ -22,6 +28,10 @@ app.get("/", (req, res) => {
   //
   // In other words, which *view* to use.
   res.render("index", { links: links, users: users });
+});
+
+app.get("/about", (req, res) => {
+  res.render("about", { links: links });
 });
 
 app.listen(3000, () => {
