@@ -10,7 +10,6 @@ const getAuthorById = expressAsyncHandler(async function (req, res) {
   const { authorId } = req.params;
 
   const author = await db.getAuthorById(Number(authorId));
-  console.log(author);
 
   if (!author) {
     throw new CustomNotFoundError("Author Not Found");
