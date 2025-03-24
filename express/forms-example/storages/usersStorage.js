@@ -5,9 +5,9 @@ class UsersStorage {
     this.id = 0;
   }
 
-  addUser({ firstName, lastName }) {
+  addUser({ firstName, lastName, email, age, bio }) {
     const id = this.id;
-    this.storage[id] = { id, firstName, lastName };
+    this.storage[id] = { id, firstName, lastName, email, age, bio };
     this.id++;
   }
 
@@ -19,8 +19,33 @@ class UsersStorage {
     return this.storage[id];
   }
 
-  updateUser(id, { firstName, lastName }) {
-    this.storage[id] = { id, firstName, lastName };
+  getUsersByName(name) {
+    console.log(name);
+    const [firstName, lastName] = name.split(" ");
+    let users = [];
+    for (const user of Object.values(this.storage)) {
+      console.log(user.firstName, firstName, user.lastName, lastName);
+      if (user.firstName === firstName && user.lastName === lastName) {
+        users.push(user);
+      }
+    }
+
+    return users;
+  }
+
+  getUsersByEmail(email) {
+    let users = [];
+    for (const user of Object.values(this.storage)) {
+      if (user.email === email) {
+        users.push(user);
+      }
+    }
+
+    return users;
+  }
+
+  updateUser(id, { firstName, lastName, email, age, bio }) {
+    this.storage[id] = { id, firstName, lastName, email, age, bio };
   }
 
   deleteUser(id) {

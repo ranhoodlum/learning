@@ -5,12 +5,35 @@
 </head>
 <body>
   <h1><%= title %></h1>
+  <%- include("partials/errors.ejs") %>
+  <form method="GET" action="/search">
+      <label>
+          Name: 
+          <input type="text" name="name" />
+      </label>
+      <label>
+          Email: 
+          <input type="email" name="email" />
+      </label>
+      <button type="submit">Search user</button>
+  </form>
   <ul>
     <% if (locals.users) {%>
       <% users.forEach(user => { %>
         <li>
           ID: <%= user.id %>, Name: <%= user.firstName %> <%= user.lastName %>
+          Email: <%= user.email %>
+          Age: <%= user.age %>
+          Bio: <%= user.bio %>
           <a href="/<%= user.id %>/update">Update User</a>
+          <form action="<%= user.id %>/delete" method="POST" style="display: inline">
+              <button 
+              type="submit" 
+              onClick='return confirm("Do you really want to delete this user? ")'
+                >
+                  Delete
+              </button>
+          </form>
         </li>
       <% }); %>
     <% } %>
