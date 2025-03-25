@@ -5,11 +5,16 @@ const pool = require("./pool");
 // 2 -- insert a new user
 // so we create 2 functions for that
 
-async function getAllUsernames() {
-  const { rows, fields, command, rowCount } = await pool.query(
-    "SELECT * FROM usernames",
+async function getUsernames(search) {
+  const { rows } = await pool.query(
+    "SELECT * FROM usernames WHERE username LIKE $1",
+    [`%${search}%`],
   );
-  console.log(rows, fields, command, rowCount);
+  return rows;
+}
+
+async function getAllUsernames() {
+  const { rows } = await pool.query("SELECT * FROM usernames");
   return rows;
 }
 
@@ -19,7 +24,13 @@ async function insertUsername(username) {
   await pool.query("INSERT INTO usernames (username) VALUES ($1)", [username]);
 }
 
+async function deleteAllUsers() {
+  await pool.query("DELETE FROM usernames");
+}
+
 module.exports = {
-  getAllUsernames,
+  getUsernames,
   insertUsername,
+  getAllUsernames,
+  deleteAllUsers,
 };
