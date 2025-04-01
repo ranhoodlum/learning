@@ -44,9 +44,8 @@ async function main() {
     console.error(e);
   } finally {
     await client.end();
+    console.log("done");
   }
-
-  console.log("done");
 }
 
 main();
