@@ -1,4 +1,5 @@
 const path = require("node:path");
+const bcrypt = require("bcryptjs");
 const { Pool } = require("pg");
 const express = require("express");
 // we're not using express-session directly
@@ -96,15 +97,20 @@ app.post("/sign-up", async (req, res, next) => {
   try {
     // MAKE SURE to
     // 1. sanitize
-    // 2. not use plain text to store passwords
-    // later. For now, we're doing this for brevity,
-    // to learn the core of auth.
+
+    // the second variable is the salt, which is often stored alongside
+    // password in the database, but bcryptjs uses salt internally within
+    // the hash function (idk what that means)
+    //
+    // salt just means random characters to prevent against ranbow tables
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [
       req.body.username,
-      req.body.password,
+      hashedPassword,
     ]);
     res.redirect("/");
-  } catch (e) {
+  } catch (err) {
+    console.log(err);
     return next(err);
   }
 });
