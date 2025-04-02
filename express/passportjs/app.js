@@ -80,10 +80,16 @@ app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
+app.use((req, res, next) => {
+  // make currentUser available to everything below this point (even views)
+  res.locals.currentUser = req.user;
+  next();
+});
+
 // routes
 // if the log in is successful, cookie is created req.user is populated
 // with user object, else, nothing
-app.get("/", (req, res) => res.render("index", { user: req.user }));
+app.get("/", (req, res) => res.render("index"));
 // create users
 app.get("/sign-up", (req, res) => res.render("sign-up-form"));
 app.post("/sign-up", async (req, res, next) => {
