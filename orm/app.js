@@ -12,6 +12,10 @@
 const { PrismaClient } = require("./generated/prisma/");
 const prisma = new PrismaClient();
 
-prisma.users.findMany().then((userList) => {
-  console.log(userList);
+prisma.users.findMany().then((usersList) => {
+  console.log(usersList);
+});
+
+prisma.demo.findMany().then((demoList) => {
+  console.log(demoList);
 });
