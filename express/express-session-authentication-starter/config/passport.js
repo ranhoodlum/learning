@@ -42,16 +42,21 @@ passport.use(strategy);
 // when passport.authenticate() is called,
 // **if the user authenticates successfully,**
 // the passport.serializeUser is called by the authenticate method
+//
+// called by passport.authenticate()
 passport.serializeUser((user, done) => {
-  // this function sets the user property in session.passport equals to this userId
+  // this function sets session.passport.user equals to this userId
   // that tells the us (and passport itself later) that the user is logged in
   done(null, user.id);
 });
 
-// this is called when the the cookie is sent again from the browser
-// The userId from cookie is looked up in the session.passport.user,
-// to see if it exists. If it does, user is fetched from the database
+// this is called by passport.session when the the cookie is sent again
+// from the browser. The userId from cookie is looked up in the
+// session.passport.user, to see if it exists. If it does, user is
+// fetched from the database
 // and assigned into the req.session.user for the rest of middleware to use
+//
+// called by passport.session()
 passport.deserializeUser(async (userId, done) => {
   try {
     const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [

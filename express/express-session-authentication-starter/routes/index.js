@@ -2,6 +2,7 @@ const router = require("express").Router();
 const passport = require("passport");
 const { genPassword } = require("../lib/passwordUtils");
 const pool = require("../config/database");
+const { isAuth, isAdmin } = require("./authMiddleware");
 
 /**
  * -------------- POST ROUTES ----------------
@@ -23,8 +24,8 @@ router.post("/register", async (req, res, next) => {
   const hash = saltHash.hash;
 
   pool.query(
-    "INSERT INTO USERS (username, password, salt) VALUES ($1, $2, $3)",
-    [req.body.uname, hash, salt],
+    "INSERT INTO USERS (username, password, salt, admin) VALUES ($1, $2, $3, $4)",
+    [req.body.uname, hash, salt, true],
   );
 
   res.redirect("/login");
@@ -66,21 +67,21 @@ router.get("/register", (req, res, next) => {
  *
  * Also, look up what behaviour express session has without a maxage set
  */
-router.get("/protected-route", (req, res, next) => {
-  // This is how you check if a user is authenticated and protect a route.  You could turn this into a custom middleware to make it less redundant
-  if (req.isAuthenticated()) {
-    res.send(
-      '<h1>You are authenticated</h1><p><a href="/logout">Logout and reload</a></p>',
-    );
-  } else {
-    res.send(
-      '<h1>You are not authenticated</h1><p><a href="/login">Login</a></p>',
-    );
-  }
+router.get("/protected-route", isAuth, (req, res) => {
+  res.send(
+    '<h1>You made it. </h1><p><a href="/logout">Logout and reload</a></p>',
+  );
+});
+
+router.get("/admin", isAdmin, (req, res) => {
+  res.send(
+    '<h1>You are a admin.</h1><p><a href="/logout">Logout and reload</a></p>',
+  );
 });
 
 // Visiting this route logs the user out
 router.get("/logout", (req, res, next) => {
+  // removes the userid from session.passport.user
   req.logout();
   res.redirect("/protected-route");
 });

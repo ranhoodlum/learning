@@ -23,15 +23,23 @@ app.use((req, res, next) => {
 });
 
 app.use(
-  // use the session middleware
-  // this middleware receives the cookie data
-  // from the incoming request, if there's cookie data,
-  // and fetches the session data corresponding to the
-  // cookie data (connect.sid specifically) that was set
-  // by this middleware itself when the first request was
-  // sent.
-  // And sets req.session and other session related properties
-  // to the request object.
+  /**
+   ** use the session middleware
+   **
+   ** this middleware receives the cookie data
+   ** from the incoming request, if there's cookie data,
+   ** and fetches the session data corresponding to the
+   ** cookie data (connect.sid specifically) that was set
+   ** by this middleware itself when the first request was
+   ** sent.
+   ** And sets req.session and other session related properties
+   ** to the request object.
+   **
+   ** For the first time user visits the site, express
+   ** creates a new session and sends the cookie to user
+   ** as connect.sid: the sessionId of session it just
+   ** created and stored in the database
+   **/
   session({
     // stored in environment variable
     // session is only valid if the secret is valid
