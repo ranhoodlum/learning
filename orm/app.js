@@ -9,13 +9,18 @@
 // root of our project)
 // are relative to the prisma module and not
 // our project.
-const { PrismaClient } = require("./generated/prisma/");
+const { PrismaClient } = require("./generated/prisma");
 const prisma = new PrismaClient();
 
-prisma.users.findMany().then((usersList) => {
-  console.log(usersList);
-});
-
-prisma.demo.findMany().then((demoList) => {
-  console.log(demoList);
-});
+prisma.user
+  .findUnique({
+    where: {
+      id: 3,
+    },
+    include: {
+      posts: true,
+    },
+  })
+  .then((users) => {
+    console.log(users);
+  });
