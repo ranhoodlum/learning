@@ -5,57 +5,42 @@ datasource db {
 
 generator client {
     provider = "prisma-client-js"
-    output   = "../generated/prisma"
+    path     = "../generated/prisma"
+}
+
+model ExtendedProfile {
+    id        Int    @id @default(autoincrement())
+    biography String
+    user      User   @relation(fields: [userId], references: [id])
+    userId    Int    @unique
 }
 
 model User {
-    id         Int      @id @default(autoincrement())
-    email      String   @unique
-    name       String?
-    role       Role     @default(USER)
-    // relations are connections between models
-    // this field right here creates relation between
-    // user and many posts
-    // here user connects in different ways with post as 
-    // a user can create a post as well as pin a post
-    // to model such relationships, we need named relations
-    // which is the first argument to the @relation attribute
-    posts      Post[]   @relation("WrittenPost")
-    pinnedPost Post?    @relation("PinnedPost", fields: [postId], references: [id])
-    profile    Profile?
-    postId     Int?
-    Post       Post[]
-}
-
-model Profile {
-    id     Int    @id @default(autoincrement())
-    bio    String
-    user   User   @relation(fields: [userId], references: [id])
-    userId Int    @unique
+    id           Int              @id @default(autoincrement())
+    name         String?
+    email        String           @unique
+    profileViews Int              @default(0)
+    role         Role             @default(USER)
+    coinflips    Boolean[]
+    posts        Post[]
+    profile      ExtendedProfile?
 }
 
 model Post {
     id         Int        @id @default(autoincrement())
-    createdAt  DateTime   @default(now())
-    updatedAt  DateTime   @updatedAt
     title      String
-    published  Boolean    @default(false)
-    // relation field | model to relate to | @relation defines the foreign key / primary key relationship
-    // this is a relation to users who write the posts 
-    author     User       @relation("WrittenPost", fields: [authorId], references: [id])
-    authorId   Int // this is a relation scalar field (used in relation above)
-
-    // this is relation to users who have pinned this post
-    pinnedBy User? @relation("PinnedPost", fields: [pinnedById], references: [id])
-    pinnedById Int? @unique
-
-    // it's a direct representation of foreign key in the underlying database
+    published  Boolean    @default(true)
+    author     User       @relation(fields: [authorId], references: [id])
+    authorId   Int
+    comments   Json?
+    views      Int        @default(0)
+    likes      Int        @default(0)
     categories Category[]
 }
 
 model Category {
     id    Int    @id @default(autoincrement())
-    name  String
+    name  String @unique
     posts Post[]
 }
 
