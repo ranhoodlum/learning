@@ -32,6 +32,7 @@ async function selectFirst() {
 }
 
 async function selectFiltered() {
+  // using where in the queries
   const endsWithPrisma = await prisma.user.findMany({
     where: {
       email: {
@@ -83,7 +84,49 @@ async function selectFiltered() {
   console.log(usersWithNoPosts);
 }
 
+async function selectFewFields() {
+  // use select field in the queries
+  const users = await prisma.user.findUnique({
+    where: {
+      email: "srj@gmail.com",
+    },
+    select: {
+      email: true,
+      name: true,
+    },
+  });
+  console.log(users);
+
+  const usersAndPosts = await prisma.user.findUnique({
+    where: {
+      email: "srj@gmail.com",
+    },
+    select: {
+      email: true,
+      posts: {
+        select: {
+          likes: true,
+        },
+      },
+    },
+  });
+  console.log(usersAndPosts);
+}
+
+async function selectAllRelations() {
+  const users = await prisma.user.findMany({
+    where: {
+      role: "ADMIN",
+    },
+    // include all posts
+    include: {
+      posts: true,
+    },
+  });
+}
+
 //selectOne();
 //selectMany();
 //selectFirst();
-selectFiltered();
+//selectFiltered();
+//selectFewFields();
