@@ -4,8 +4,9 @@ datasource db {
 }
 
 generator client {
-    provider = "prisma-client-js"
-    path     = "../generated/prisma"
+    provider        = "prisma-client-js"
+    path            = "../generated/prisma"
+    previewFeatures = ["typedSql"]
 }
 
 model ExtendedProfile {
