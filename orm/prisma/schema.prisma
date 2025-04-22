@@ -25,18 +25,19 @@ model User {
     coinflips    Boolean[]
     posts        Post[]
     profile      ExtendedProfile?
+    jobTitle     String           @default("Banker")
 }
 
 model Post {
     id         Int        @id @default(autoincrement())
     title      String
-    published  Boolean    @default(true)
     author     User       @relation(fields: [authorId], references: [id])
     authorId   Int
     comments   Json?
     views      Int        @default(0)
     likes      Int        @default(0)
     categories Category[]
+    status     Status     @default(Unknown)
 }
 
 model Category {
@@ -48,4 +49,12 @@ model Category {
 enum Role {
     USER
     ADMIN
+}
+
+enum Status {
+    Unknown
+    Draft
+    InProgress
+    InReview
+    Published
 }

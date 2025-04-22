@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "data-migration:add-status-column": "node ./prisma/migrations/20250422064929_add_status_column/dataMigration.js"
   },
   "keywords": [],
   "author": "",
