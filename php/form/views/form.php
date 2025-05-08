@@ -52,12 +52,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         // connect to mysql
         require "connection.php";
         
+        // use default hashing algorithm for hashing password
+        // you need to use password_verify when verifying hash
+        $hashed_pw = password_hash($password, PASSWORD_DEFAULT);
+
         // connection is defined in connection.php
         $stmt = $connection->prepare("INSERT INTO User (name, email, password, gender) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $username, $email, $password, $gender);
+        $stmt->bind_param("ssss", $username, $email, $hashed_pw, $gender);
         if ($stmt->execute()) {
             $url = "/";
             header("Location: $url");
+            exit;
             // echo "Form submitted successfully as $username, password $password, email $email, gender $gender";
         } else {
             echo $form;
