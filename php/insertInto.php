@@ -6,6 +6,7 @@ $dbname = "test";
 
 $connection = new mysqli($servername, $username, $password, $dbname);
 
+// connection error (connect_error) is also a type of "error"
 if ($connection->error) {
     die("Connection error: " . $connection->error);
 }
