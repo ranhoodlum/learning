@@ -82,6 +82,9 @@ app.set("view engine", "ejs");
 
 // set up a session with options
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+// calls deserializeUser and sets req.user on subsequent
+// user requests *after* login i.e. in requests after user
+// has already authenticated
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
